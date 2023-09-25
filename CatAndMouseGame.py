@@ -21,6 +21,7 @@ def getAssetBundle(assetbundle):
         32
     )
 
+    
     data = cipher.decrypt(array)
     gzip_data = gzip.decompress(data)
     data_unpacked = msgpack.unpackb(gzip_data)
