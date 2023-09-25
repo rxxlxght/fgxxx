@@ -1,0 +1,44 @@
+name: FGO Login System
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: "30 04 * * *"
+    - cron: "30 10 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+      - name: Install Requirements
+        run: pip install -r https://raw.githubusercontent.com/O-Isaac/FGO-Daily-Login/master/requirements.txt
+
+      - name: Getting files from Repo
+        uses: actions/checkout@v2
+
+      - name: Get Private Repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'rxxlxght/fgpv'
+          ref: 'main'
+          token: ${{ secrets.PRIVATE_REPOSITORY_TOKEN }}
+
+      - name: Execute main script
+        run: |
+          python3 main.py
+        env:
+          userIds: ${{ secrets.GAME_USERIDS }}
+          authKeys: ${{ secrets.GAME_AUTHKEYS }}
+          secretKeys: ${{ secrets.GAME_SECRETKEYS }}
+          UserAgent: ${{ secrets.GAME_USERAGENT }}
+          fateRegion: ${{ secrets.GAME_REGION }}
+          webhookDiscord: ${{ secrets.DISCORD_WEBHOOK }}
+          TGBotToken: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TGAdminId: ${{ secrets.TELEGRAM_ADMIN_ID }}
