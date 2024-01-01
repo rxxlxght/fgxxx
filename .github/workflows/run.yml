@@ -23,6 +23,9 @@ jobs:
       - name: Getting files from Repo
         uses: actions/checkout@v2
 
+      - name: Keepalive Workflow
+        uses: gautamkrishnar/keepalive-workflow@1.1.0
+
       - name: Get Private Repository
         uses: actions/checkout@v2
         with:
@@ -42,7 +45,3 @@ jobs:
           webhookDiscord: ${{ secrets.DISCORD_WEBHOOK }}
           TGBotToken: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TGAdminId: ${{ secrets.TELEGRAM_ADMIN_ID }}
-
-      - name: Keepalive Workflow
-        uses: gautamkrishnar/keepalive-workflow@1.1.0
-            
